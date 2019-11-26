@@ -2,6 +2,8 @@ package com.mm.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,12 +15,14 @@ import com.mm.app.model.Location;
 import com.mm.app.service.LocationService;
 
 @Controller
-public class LocationController {
+@RequestMapping("/")
+@Configuration
+@ComponentScan("com.mm.app")
+public class AppController {
 	
 	private LocationService locationService;
 	
 	@Autowired(required = true)
-	@Qualifier(value = "locationService")
 	public void setLocationService(LocationService locationService) {
 		
 		this.locationService = locationService;
