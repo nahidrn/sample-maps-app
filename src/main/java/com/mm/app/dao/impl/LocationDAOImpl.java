@@ -2,11 +2,11 @@ package com.mm.app.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.mm.app.dao.AbstractDAO;
@@ -14,60 +14,54 @@ import com.mm.app.dao.LocationDAO;
 import com.mm.app.model.Location;
 
 @Repository
-public class LocationDAOImpl extends AbstractDAO<Integer, Location> implements LocationDAO {
+public class LocationDAOImpl extends AbstractDAO<Long, Location> implements LocationDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(LocationDAOImpl.class);
-	private SessionFactory sessionFactory;
+	
+	@Override
+	public void createLocation(Location loc) {
 
-	public void setSessionFactory(SessionFactory sf) {
-		this.sessionFactory = sf;
+		persist(loc);
 	}
 
-	public void addLocation(Location loc) {
-		// TODO Auto-generated method stub
+	@Override
+	public void deleteLocationById(Long id) {
 
+		delete(getByKey(id));
+		/*Query query = getSession().createSQLQuery("delete from location where id = :id");
+        query.setLong("id", id);
+        query.executeUpdate();*/
 	}
 
-	public void updateLocation(Location loc) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void removeLocation(Location loc) {
-		// TODO Auto-generated method stub
-
-	}
-
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<Location> getLocationList() {
+	public List<Location> findAllLocations() {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		List<Location> locationList = session.createQuery("FROM location").list();
-		for (Location loc : locationList) {
-			logger.info("Location List::" + loc);
-		}
-		return locationList;
+		Criteria criteria = createEntityCriteria();
+        return (List<Location>) criteria.list();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<Location> getLocationListByType(String type) {
+	public List<Location> findLocationsByType(String type) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM location WHERE type = :location_type");
-		query.setParameter("location_type", type);
+		Query query = getSession().createSQLQuery("from location where type = :type");
+        query.setString("type", type);
 		List<Location> locationList = (List<Location>) query.list();
-		for (Location loc : locationList) {
-			logger.info("Location List::" + loc);
-		}
 		return locationList;
 	}
 
-	public Location getLocationById(Long id) {
+	@Override
+	public Location findLocationById(Long id) {
 
-		Session session = this.sessionFactory.getCurrentSession();
-		Location location = (Location) session.load(Location.class, id);
-		logger.info("Location loaded successfully, Location details=" + location);
-		return location;
+		return getByKey(id);
+	}
+
+	public Location findLocationByName(String name) {
+
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("name", name));
+		return (Location) criteria.uniqueResult();
 	}
 
 }

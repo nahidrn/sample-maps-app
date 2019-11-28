@@ -90,19 +90,27 @@ a.btn {
 </head>
 <body>
 	<h3>Location List</h3>
-	<c:if test="${!empty getLocationList}">
+	<c:if test="${!empty locations}">
 		<table class="tg">
 			<tr>
 				<th width="80">ID</th>
 				<th width="120">Location Name</th>
+				<th width="120">Location Type</th>
+				<th width="120"></th>
+				<th width="120"></th>
 			</tr>
-			<c:forEach items="${getLocationList}" var="location">
+			<c:forEach items="${locations}" var="location">
 				<tr>
 					<td>${location.id}</td>
 					<td>${location.name}</td>
+					<td>${location.type}</td>
+					<td><a href="<c:url value='/edit-${location.id}-location' />">Edit</a></td>
+					<td><a href="<c:url value='/delete-${location.id}-location' />">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</c:if>
+
+	<a href="<c:url value='/createlocation' />">Add New Location</a>
 </body>
 </html>

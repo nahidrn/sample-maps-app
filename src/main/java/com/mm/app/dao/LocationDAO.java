@@ -9,10 +9,10 @@ import com.mm.app.model.Location;
  */
 public interface LocationDAO {
 	
-	public void addLocation(Location loc);
-	public void updateLocation(Location loc);
-	public void removeLocation(Location loc);
-	public List<Location> getLocationList();
-	public List<Location> getLocationListByType(String type);
-	public Location getLocationById(Long id);
+	public void createLocation(Location loc);
+	public void deleteLocationById(Long id);
+	public List<Location> findAllLocations();
+	public List<Location> findLocationsByType(String type);
+	public Location findLocationById(Long id);
+	public Location findLocationByName(String name);
 }

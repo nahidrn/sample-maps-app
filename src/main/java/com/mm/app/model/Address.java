@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author nahid
@@ -27,25 +30,31 @@ public @Data class Address {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "street")
+	@Column(name = "street", nullable = false)
+	@NotEmpty
 	private String street;
 	
 	@Column(name = "number")
 	private String number;
 	
-	@Column(name = "zip_code")
+	@Column(name = "zip", nullable = false)
+	@NotEmpty
 	private String zipCode;
 	
-	@Column(name = "city")
+	@Column(name = "city", nullable = false)
+	@NotEmpty
 	private String city;
 	
-	@Column(name = "country")
+	@Column(name = "country", nullable = false)
+	@NotEmpty
 	private String country;
 	
-	@Column(name = "latitude")
+	@Column(name = "latitude", nullable = false)
+	@NotNull
 	private Double latitude;
 	
-	@Column(name = "longitude")
+	@Column(name = "longitude", nullable = false)
+	@NotNull
 	private Double longitude;
 
 

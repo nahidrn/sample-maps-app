@@ -8,50 +8,68 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mm.app.dao.LocationDAO;
 import com.mm.app.service.LocationService;
 import com.mm.app.model.Location;
+import com.mm.app.model.User;
 
-@Service
+@Service("locationService")
+@Transactional
 public class LocationServiceImpl implements LocationService {
 
-	@Autowired
-	private LocationDAO locationDAO;
 
-	public void setLocationDAO(LocationDAO locationDAO) {
+    @Autowired
+    private LocationDAO dao;
+    
+	@Override
+	public void createLocation(Location loc) {
 		
-		this.locationDAO = locationDAO;
+		dao.createLocation(loc);
 	}
 
-	public void addLocation(Location loc) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	@Override
 	public void updateLocation(Location loc) {
-		// TODO Auto-generated method stub
 		
+		Location entity = dao.findLocationById(loc.getId());
+        if(entity!=null){
+            entity.setName(loc.getName());
+            entity.setAddress(loc.getAddress());
+            entity.setType(loc.getType());
+        }
 	}
 
-	public void removeLocation(Location loc) {
-		// TODO Auto-generated method stub
+	@Override
+	public void deleteLocationById(Long id) {
 		
+		dao.deleteLocationById(id);
 	}
 
-	@Transactional
-	public List<Location> getLocationList() {
+	@Override
+	public List<Location> findAllLocations() {
 		
-		return this.locationDAO.getLocationList();
+		return dao.findAllLocations();
 	}
 
-	@Transactional
-	public List<Location> getLocationListByType(String type) {
+	@Override
+	public List<Location> findLocationByType(String type) {
 		
-		return this.locationDAO.getLocationListByType(type);
+		return dao.findLocationsByType(type);
 	}
 
-	@Transactional
-	public Location getLocationById(Long id) {
+	@Override
+	public Location findLocationById(Long id) {
 		
-		return this.locationDAO.getLocationById(id);
+		return dao.findLocationById(id);
 	}
-	
-	
+
+
+	@Override
+	public Location findLocationByName(String name) {
+
+		return dao.findLocationByName(name);
+	}
+
+	@Override
+	public boolean isLocationNameUnique(Long id, String name) {
+
+		Location location = findLocationByName(name);
+		return ( location == null || ((id != null) && (location.getId() == id)));
+	}
 }

@@ -10,9 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author nahid
@@ -30,12 +32,16 @@ public @Data class Location {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", unique=true, nullable = false)
+	@NotEmpty
 	private String name;
-	/*
-	@OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "id")
-	private Address address;*/
+	
+	@Column(name = "type", nullable = false)
+	@NotEmpty
+	private String type;
+	
+	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "address_id", nullable = false)
+	private Address address;
 
 }
