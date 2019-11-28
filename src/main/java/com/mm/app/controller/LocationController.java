@@ -5,8 +5,14 @@ import java.util.Locale;
 
 import javax.validation.Valid;
 
+import com.mm.app.constants.LocationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -19,7 +25,7 @@ import com.mm.app.model.Location;
 import com.mm.app.service.LocationService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/l")
 public class LocationController {
 
     @Autowired
@@ -27,26 +33,41 @@ public class LocationController {
 
     @Autowired
     MessageSource messageSource;
+
+	@Autowired
+	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
+
+	@Autowired
+	AuthenticationTrustResolver authenticationTrustResolver;
 	
 	/*
      * This method will list all existing locations.
      */
-    @RequestMapping(value = { "/", "/locations" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/", "/listlocations" }, method = RequestMethod.GET)
     public String getLocationList(ModelMap model) {
 
         List<Location> locations = locationService.findAllLocations();
-        for (Location loc : locations) {
-			System.out.println(loc.getAddress());
-		}
         model.addAttribute("locations", locations);
+		model.addAttribute("loggedinuser", getPrincipal());
         return "locations";
     }
 
+	@RequestMapping(value = { "/searchlocations" }, method = RequestMethod.GET)
+	public String getLocationListByType(ModelMap model) {
+
+		List<Location> locations = locationService.findLocationByType(LocationType.EVENT.LocationType());
+		model.addAttribute("locations", locations);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "locations";
+	}
+
     @RequestMapping(value = { "/", "/createlocation" }, method = RequestMethod.GET)
 	public String newLocation(ModelMap model) {
+
 		Location location = new Location();
 		model.addAttribute("location", location);
 		model.addAttribute("edit", false);
+		model.addAttribute("loggedinuser", getPrincipal());
 		return "createlocation";
 	}
 
@@ -54,38 +75,32 @@ public class LocationController {
 	public String saveLocation(@Valid Location location, BindingResult result,
 						   ModelMap model) {
 
-		System.out.println(result);
 		if (result.hasErrors()) {
 			return "createlocation";
 		}
-
-        /*
-         * Preferred way to achieve uniqueness of field [name] should be implementing custom @Unique annotation
-         * and applying it on field [name] of Model class [User].
-         *
-         *
-         */
 		if(!locationService.isLocationNameUnique(location.getId(), location.getName())){
 			FieldError nameUniqueError =new FieldError("location","name",messageSource.getMessage("non.unique.locationname", new String[]{location.getName()}, Locale.getDefault()));
 			result.addError(nameUniqueError);
 			return "createlocation";
 		}
-
 		locationService.createLocation(location);
 
-		model.addAttribute("success", "Location " + location.getName() + " created successfully");
-		return "redirect:/locations";
+		model.addAttribute("success", "Location " + location.getName() + " was created successfully");
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "registrationsuccess";
 	}
 
 
 	/*
 	 * This method will provide the medium to update an existing employee.
 	 */
-	@RequestMapping(value = { "/edit-{id}-location" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/edit-location-{id}" }, method = RequestMethod.GET)
 	public String editUser(@PathVariable Long id, ModelMap model) {
+
 		Location location = locationService.findLocationById(id);
 		model.addAttribute("location", location);
 		model.addAttribute("edit", true);
+		model.addAttribute("loggedinuser", getPrincipal());
 		return "createlocation";
 	}
 
@@ -93,7 +108,7 @@ public class LocationController {
 	 * This method will be called on form submission, handling POST request for
 	 * updating location in database. It also validates the user input
 	 */
-	@RequestMapping(value = { "/edit-{id}-location" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/edit-location-{id}" }, method = RequestMethod.POST)
 	public String updateEmployee(@Valid Location location, BindingResult result,
 								 ModelMap model, @PathVariable Long id) {
 
@@ -109,8 +124,9 @@ public class LocationController {
 
 		locationService.updateLocation(location);
 
-		model.addAttribute("success", "Location " + location.getName()  + " updated successfully");
-		return "redirect:/locations";
+		model.addAttribute("success", "Location " + location.getName() + " updated successfully");
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "registrationsuccess";
 	}
 
 
@@ -119,8 +135,25 @@ public class LocationController {
 	 */
 	@RequestMapping(value = { "/delete-{id}-location" }, method = RequestMethod.GET)
 	public String deleteLocation(@PathVariable Long id) {
+
 		locationService.deleteLocationById(id);
 		return "redirect:/locations";
+	}
+
+	/**
+	 * This method returns the principal[user-name] of logged-in user.
+	 */
+	private String getPrincipal(){
+
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails)principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
 	}
 
 }

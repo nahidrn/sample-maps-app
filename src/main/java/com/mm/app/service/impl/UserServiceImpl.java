@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mm.app.dao.UserDAO;
+import com.mm.app.dao.UserDao;
 import com.mm.app.model.User;
 import com.mm.app.service.UserService;
 
@@ -15,7 +15,7 @@ import com.mm.app.service.UserService;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDAO dao;
+    private UserDao dao;
 
     public User findUserById(Long id) {
     	

@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.mm.app.dao.LocationDAO;
+import com.mm.app.dao.LocationDao;
 import com.mm.app.service.LocationService;
 import com.mm.app.model.Location;
-import com.mm.app.model.User;
 
 @Service("locationService")
 @Transactional
@@ -16,7 +15,7 @@ public class LocationServiceImpl implements LocationService {
 
 
     @Autowired
-    private LocationDAO dao;
+    private LocationDao dao;
     
 	@Override
 	public void createLocation(Location loc) {
