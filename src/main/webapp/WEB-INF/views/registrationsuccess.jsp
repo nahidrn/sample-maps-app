@@ -6,7 +6,9 @@
 <html>
 <%@include file="header.jsp" %>
 <body>
-	<div class="generic-container">
+<div class="col-md-12">
+	<div class="col-md-2"></div>
+	<div class="generic-container col-md-8">
 		<%@include file="authheader.jsp" %>
 		
 		<div class="alert alert-success lead">
@@ -14,9 +16,10 @@
 		</div>
 		
 		<span class="well floatRight">
-			Go to <a href="<c:url value='/listusers' />">Users List</a>
+			 <a href="<c:url value='/' />">Go to Home</a>
 		</span>
 	</div>
+</div>
 </body>
 
 </html>

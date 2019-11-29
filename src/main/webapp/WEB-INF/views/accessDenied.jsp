@@ -7,10 +7,13 @@
 	<title>AccessDenied page</title>
 </head>
 <body>
-	<div class="generic-container">
+<div class="col-md-12">
+	<div class="col-md-2"></div>
+	<div class="generic-container col-md-8">
 		<div class="authbar">
 			<span>Dear <strong>${loggedinuser}</strong>, You are not authorized to access this page.</span> <span class="floatRight"><a href="<c:url value="/logout" />">Logout</a></span>
 		</div>
 	</div>
+</div>
 </body>
 </html>

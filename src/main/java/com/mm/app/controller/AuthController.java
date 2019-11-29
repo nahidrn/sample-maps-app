@@ -51,7 +51,7 @@ public class AuthController {
 
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String searchHome(ModelMap model) {
-		return "redirect:/l/searchlocations";
+		return "redirect:/l/searchlocation";
 	}
 	/**
 	 * This method will list all existing users.

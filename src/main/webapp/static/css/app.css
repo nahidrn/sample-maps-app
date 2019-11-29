@@ -1,12 +1,15 @@
 html{
-	background-color:#2F2F2F;
+	background-color:rgb(245, 245, 245);
 }
 
 body{
 	height: 100%;
 	background-color:rgb(245, 245, 245);
 }
-
+.userName{
+    color:#2e6da4 !important;
+    font-weight: bold !important;
+}
 
 #mainWrapper {
 	height: 100%;
@@ -36,9 +39,9 @@ background-image: linear-gradient(to top, #EDEDED 0%, #EAEAEA 8%, #2F2F2F 100%, 
 }
 
 .generic-container {
-  position:fixed;
+  /*position:fixed;
   width:80%;
-  left: 10%;
+  left: 10%;*/
   margin-top: 30px;
   margin-bottom: 20px;
   padding: 20px;
@@ -76,6 +79,19 @@ body, #mainWrapper, .form-control, .generic-container{
     width: 40%;
     left: 30%;
     position: absolute;
+}
+
+.radio {
+	margin-top: 5px !important;
+	marging-bottom: 0px !important;
+}
+
+.dropdown-big {
+	height: 37px !important;
+}
+
+.zeromargin {
+	margin: 0px !important;
 }
 
 .login-card {

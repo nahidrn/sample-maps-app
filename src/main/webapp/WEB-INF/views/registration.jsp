@@ -8,11 +8,13 @@
 <%@include file="header.jsp" %>
 
 <body>
- 	<div class="generic-container">
+<div class="col-md-12">
+	<div class="col-md-2"></div>
+ 	<div class="generic-container col-md-8">
 		<%@include file="authheader.jsp" %>
 
 		<div class="well lead">User Registration Form</div>
-	 	<form:form method="POST" modelAttribute="user" class="form-horizontal">
+	 	<form:form method="POST" modelAttribute="user" class="form-horizontal" onsubmit="return submitForm()">
 			<form:input type="hidden" path="id" id="id"/>
 	
 			<div class="row">
@@ -32,7 +34,7 @@
 					<label class="col-md-3 control-label" for="password">Password</label>
 					<div class="col-md-7">
 						<form:input type="password" path="password" id="password" class="form-control input-sm" />
-						<div class="has-error">
+						<div class="has-error" id="password-error">
 							<form:errors path="password" class="help-inline"/>
 						</div>
 					</div>
@@ -44,7 +46,7 @@
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-label" for="active">Active Status</label>
 					<div class="col-md-7">
-						<form:select path="active" id="active" class="form-control input-sm" >
+						<form:select path="active" id="active" class="form-control input-sm dropdown-big" >
 							<form:option value="true">Active</form:option>
 							<form:option value="false">Inactive</form:option>
 						</form:select>
@@ -82,5 +84,33 @@
 			</div>
 		</form:form>
 	</div>
+</div>
 </body>
+
+<script>
+
+	function submitForm() {
+		var passwordError = document.getElementById("password-error");
+		passwordError.innerHTML = "";
+		console.log("@submitForm");
+
+		var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
+
+		var password = document.getElementById("password").value;
+
+		console.log("@password", password);
+		console.log("@password", strongRegex.test(password));
+
+		if (!strongRegex.test(password)) {
+			passwordError.innerHTML = "Password must contain atleast one uppercase, one lowercase, one number, one special symbol and 8 characters";
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+</script>
+
 </html>

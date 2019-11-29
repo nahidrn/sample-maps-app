@@ -43,7 +43,7 @@ public class LocationController {
 	/*
      * This method will list all existing locations.
      */
-    @RequestMapping(value = { "/", "/listlocations" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/listlocations" }, method = RequestMethod.GET)
     public String getLocationList(ModelMap model) {
 
         List<Location> locations = locationService.findAllLocations();
@@ -52,16 +52,18 @@ public class LocationController {
         return "locations";
     }
 
-	@RequestMapping(value = { "/searchlocations" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/searchlocation" }, method = RequestMethod.GET)
 	public String getLocationListByType(ModelMap model) {
 
-		List<Location> locations = locationService.findLocationByType(LocationType.EVENT.LocationType());
-		model.addAttribute("locations", locations);
+		List<Location> eventLocations = locationService.findLocationByType(LocationType.EVENT.LocationType());
+		List<Location> poiLocations = locationService.findLocationByType(LocationType.POI.LocationType());
+		model.addAttribute("eventLocations", eventLocations);
+		model.addAttribute("poiLocations", poiLocations);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "locations";
+		return "searchlocation";
 	}
 
-    @RequestMapping(value = { "/", "/createlocation" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/createlocation" }, method = RequestMethod.GET)
 	public String newLocation(ModelMap model) {
 
 		Location location = new Location();
@@ -75,6 +77,7 @@ public class LocationController {
 	public String saveLocation(@Valid Location location, BindingResult result,
 						   ModelMap model) {
 
+		System.out.println("result : "+result);
 		if (result.hasErrors()) {
 			return "createlocation";
 		}
@@ -133,11 +136,11 @@ public class LocationController {
 	/*
 	 * This method will delete an employee by it's SSN value.
 	 */
-	@RequestMapping(value = { "/delete-{id}-location" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/delete-location-{id}" }, method = RequestMethod.GET)
 	public String deleteLocation(@PathVariable Long id) {
 
 		locationService.deleteLocationById(id);
-		return "redirect:/locations";
+		return "redirect:/l/listlocations";
 	}
 
 	/**

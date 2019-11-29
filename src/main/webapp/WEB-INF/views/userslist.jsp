@@ -7,7 +7,9 @@
 <%@include file="header.jsp" %>
 
 <body>
-	<div class="generic-container">
+<div class="col-md-12">
+	<div class="col-md-2"></div>
+	<div class="generic-container col-md-8">
 		<%@include file="authheader.jsp" %>	
 		<div class="panel panel-default">
 			  <!-- Default panel contents -->
@@ -48,5 +50,6 @@
 		 	</div>
 	 	</sec:authorize>
    	</div>
+</div>
 </body>
 </html>
