@@ -109,3 +109,7 @@ The project was created using Spring's annotation based structure. I chose annot
  3. Adding sitemesh for templating in jsp.
  4. Maybe shifting the googe maps api implementation to server side.
  5. Implementation frond-end validations for all forms
+ 
+ # Current Concerns
+ 
+ 1. The map is currently only showing directions/distance for one event location to one point of interest using DirectionsService. This needs to support multiple point of interest to one event location distances and routes.
