@@ -115,3 +115,5 @@ The project was created using Spring's annotation based structure. I chose annot
  __1. The map is currently only showing directions/distance for one event location to one point of interest using DirectionsService. This needs to support multiple point of interest to one event location distances and routes.__
  
  __2. Currrent test suit covers 100% of the services, 80% of the models and 0% of the conrollers and dao classes.__
+
+ __3. Code needs to be refactored.__
