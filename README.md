@@ -27,6 +27,8 @@ One can create a new user, edit or delete an existing user, and list all the use
     JDK 1.8
     Tomcat 9.0.27
     Eclipse Neon 
+    JUnit
+    Mockito
 
 
 # Steps for running
