@@ -78,8 +78,8 @@ INSERT INTO USER_USER_PROFILE (user_id, user_profile_id)
 ```
 Now you can login to the application using following id and password
 ```
-User Name: __admin__
-Password: __ThisIsASecuredPassword :)__
+User Name: admin
+Password:  ThisIsASecuredPassword :)
 ```
 # Project Structure
 
