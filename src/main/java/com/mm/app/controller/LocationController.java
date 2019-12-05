@@ -95,10 +95,10 @@ public class LocationController {
 
 
 	/*
-	 * This method will provide the medium to update an existing employee.
+	 * This method will provide the medium to update an existing location.
 	 */
 	@RequestMapping(value = { "/edit-location-{id}" }, method = RequestMethod.GET)
-	public String editUser(@PathVariable Long id, ModelMap model) {
+	public String editLocation(@PathVariable Long id, ModelMap model) {
 
 		Location location = locationService.findLocationById(id);
 		model.addAttribute("location", location);
@@ -112,7 +112,7 @@ public class LocationController {
 	 * updating location in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/edit-location-{id}" }, method = RequestMethod.POST)
-	public String updateEmployee(@Valid Location location, BindingResult result,
+	public String updateLocation(@Valid Location location, BindingResult result,
 								 ModelMap model, @PathVariable Long id) {
 
 		if (result.hasErrors()) {
@@ -134,7 +134,7 @@ public class LocationController {
 
 
 	/*
-	 * This method will delete an employee by it's SSN value.
+	 * This method will delete an location by it's SSN value.
 	 */
 	@RequestMapping(value = { "/delete-location-{id}" }, method = RequestMethod.GET)
 	public String deleteLocation(@PathVariable Long id) {
