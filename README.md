@@ -27,6 +27,8 @@ One can create a new user, edit or delete an existing user, and list all the use
     JDK 1.8
     Tomcat 9.0.27
     Eclipse Neon 
+    JUnit
+    Mockito
 
 
 # Steps for running
@@ -76,8 +78,8 @@ INSERT INTO USER_USER_PROFILE (user_id, user_profile_id)
 ```
 Now you can login to the application using following id and password
 ```
-User Name: __admin__
-Password: __ThisIsASecuredPassword :)__
+User Name: admin
+Password:  ThisIsASecuredPassword :)
 ```
 # Project Structure
 
@@ -109,3 +111,11 @@ The project was created using Spring's annotation based structure. I chose annot
  3. Adding sitemesh for templating in jsp.
  4. Maybe shifting the googe maps api implementation to server side.
  5. Implementation frond-end validations for all forms
+ 
+ # Current Concerns
+ 
+ __1. The map is currently only showing directions/distance for one event location to one point of interest using DirectionsService. This needs to support multiple point of interest to one event location distances and routes.__
+ 
+ __2. Currrent test suit covers 100% of the services, 80% of the models and 0% of the conrollers and dao classes.__
+
+ __3. Code needs to be refactored.__
