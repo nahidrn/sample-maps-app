@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.io.Serializable;
+
 /**
  * @author nahid
  *
@@ -23,7 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "address")
-public @Data class Address {
+public @Data class Address implements Serializable {
 	
 	@Id
 	@Column(name = "id")

@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.io.Serializable;
+
 /**
  * @author nahid
  *
@@ -25,7 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "location")
-public @Data class Location {
+public @Data class Location implements Serializable {
 	
 	@Id
 	@Column(name = "id")
