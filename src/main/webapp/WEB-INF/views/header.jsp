@@ -4,6 +4,6 @@
 	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
-	<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCX5-HFTDTY-PB2oG95kUGoVOhDZ3-cT3I"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3&key=YOUR_API_KEY"></script>
 	<%--<script type="text/javascript" src="/static/js/maplabel-compiled.js"/>--%>
 </head>
